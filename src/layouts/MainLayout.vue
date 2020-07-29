@@ -7,19 +7,24 @@
       :width="215"
       :breakpoint="500"
       :mini="miniState"
+      @mouseover="miniState = false"
+      @mouseout="miniState = true"
       mini-to-overlay
       elevated
     >
       <q-list>
         <q-item>
           <q-item-section avatar>
-            <q-btn
-              flat
-              dense
-              round
-              icon="menu"
-              @click="miniState = !miniState"
-            />
+            <q-avatar size="34px">
+              <img src="../../app-icon.png"/>
+            </q-avatar>
+<!--            <q-btn-->
+<!--              flat-->
+<!--              dense-->
+<!--              round-->
+<!--              icon="menu"-->
+<!--              @click="miniState = !miniState"-->
+<!--            />-->
           </q-item-section>
           <q-item-section>
             <q-item-label class="text-bold brand-font" style="font-size: 24px;">StockPile</q-item-label>
