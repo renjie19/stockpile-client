@@ -34,12 +34,12 @@ export const AppConfigService = {
     return JSON.parse(JSON.stringify(config, null, 2))
   },
   saveConfig (newConfig) {
-    const currentConfig = this.readConfig()
+    const currentConfig = JSON.parse(this.readConfig())
     Object.keys(newConfig).forEach(key => {
       currentConfig[key] = newConfig[key]
     })
-    fs.writeFileSync(CONFIG_PATH, currentConfig)
-    appConfig = this.readConfig()
+    fs.writeFileSync(CONFIG_PATH, JSON.stringify(currentConfig, null, 2))
+    appConfig = JSON.parse(this.readConfig())
   },
   getDefaultConfig () {
     return JSON.stringify(defaultConfig, null, 2)
@@ -55,5 +55,6 @@ function addNonExistentKeyValuePairsInExistingConfig () {
       existingConfig[key] = defaultConfig[key]
     }
   })
+  console.log(existingConfig)
   fs.writeFileSync(CONFIG_PATH, existingConfig)
 }

@@ -12,8 +12,6 @@ export default {
     return result.data
   },
   async [ItemStore.ADD] (item) {
-    console.log('reached controller add')
-    console.log(item)
     const endPoint = apiName + '/add'
     const url = AppConfigService.getServerUrl(endPoint)
     const result = await axios.post(url, item)

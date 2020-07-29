@@ -18,12 +18,15 @@
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",
+    "@quasar/quasar-app-extension-icon-factory": "^1.0.0-rc.7",
+    "@quasar/quasar-app-extension-icon-genie": "^1.1.3",
     "babel-eslint": "^10.0.1",
     "devtron": "^1.4.0",
     "electron": "^9.1.1",
     "electron-builder": "^22.8.0",
     "electron-debug": "^3.1.0",
     "electron-devtools-installer": "^3.1.1",
+    "electron-icon-maker": "0.0.4",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-loader": "^3.0.3",
@@ -36,15 +39,7 @@
     "simple-encryptor": "^4.0.0"
   },
   "browserslist": [
-    "last 10 Chrome versions",
-    "last 10 Firefox versions",
-    "last 4 Edge versions",
-    "last 7 Safari versions",
-    "last 8 Android versions",
-    "last 8 ChromeAndroid versions",
-    "last 8 FirefoxAndroid versions",
-    "last 10 iOS versions",
-    "last 5 Opera versions"
+    "last 1 version, not dead, ie >= 11"
   ],
   "engines": {
     "node": ">= 10.18.1",

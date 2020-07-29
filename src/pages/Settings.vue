@@ -21,6 +21,8 @@
           <q-btn
             color="primary"
             label="Submit"
+            :loading="isLoading"
+            @click="saveConfig"
           />
         </q-card-actions>
       </q-card>
@@ -36,19 +38,37 @@ export default {
   name: 'Settings',
   data () {
     return {
+      isLoading: false,
       form: {
         host: '',
         port: ''
       }
     }
   },
-  async created () {
+  async activated () {
     this.form.host = await AppConfigService.getProperty(AppConfigConstants.HOST)
     this.form.port = await AppConfigService.getProperty(AppConfigConstants.PORT)
   },
   methods: {
     saveConfig () {
-      // check connection
+      try {
+        this.isLoading = true
+        this.$v.form.$touch()
+        if (this.$v.form.$error) {
+          this.notifyError('Please check fields')
+          return
+        }
+        // check connection
+        AppConfigService.saveConfig({
+          [AppConfigConstants.HOST]: this.form.host,
+          [AppConfigConstants.PORT]: this.form.port
+        })
+        this.isLoading = false
+        this.notifySuccess('Config Saved')
+      } catch (e) {
+        this.isLoading = false
+        this.notifyError(e)
+      }
     }
   },
   validations: {

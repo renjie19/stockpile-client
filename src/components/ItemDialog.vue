@@ -157,7 +157,6 @@ export default {
           this.notifySuccess('Item Updated')
           this.open = false
         } else {
-          console.log(this.form)
           this.notifySuccess('Item Created')
           await this[ItemStore.ADD](this.form)
           this.clearFields()
