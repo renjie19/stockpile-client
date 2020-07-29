@@ -1,35 +1,20 @@
 import { ItemStore } from 'src/store/item/constants'
-import axios from 'axios'
-import { ItemApi } from 'src/constants/api-item-constants'
+import ItemController from 'src/api/item/ItemController'
 
 export default {
-  [ItemStore.FIND_ALL] ({ commit }) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        await axios.get(ItemApi.FIND_ALL).then(response => commit([ItemStore.SET_ITEMS], response.data))
-        resolve()
-      } catch (error) {
-        reject(error)
-      }
-    })
+  async [ItemStore.FIND_ALL] ({ commit }) {
+    const results = await ItemController[ItemStore.FIND_ALL]()
+    commit(ItemStore.SET_ITEMS, results)
+    return results
   },
-  [ItemStore.ADD] ({ commit }, item) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        await axios.post(ItemApi.ADD, item).then(response => commit([ItemStore.ADD], response.data))
-        resolve()
-      } catch (e) {
-        reject(e)
-      }
-    })
+  async [ItemStore.ADD] ({ commit }, item) {
+    const result = await ItemController[ItemStore.ADD](item)
+    commit(ItemStore.ADD, result)
+    return result
   },
-  [ItemStore.UPDATE] ({ commit }, item) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        await axios.post(ItemApi.UPDATE, item).then(response => commit([ItemStore.UPDATE], response.data))
-      } catch (e) {
-        reject(e)
-      }
-    })
+  async [ItemStore.UPDATE] ({ commit, state }, item) {
+    const result = await ItemController[ItemStore.UPDATE](item)
+    commit(ItemStore.UPDATE, result)
+    return result
   }
 }

@@ -1,3 +1,5 @@
+import stockModule from './modules/stock'
+import settingModule from './modules/setting'
 
 const routes = [
   {
@@ -7,6 +9,8 @@ const routes = [
       { path: '', component: () => import('pages/Index.vue') }
     ]
   },
+  stockModule,
+  settingModule,
 
   // Always leave this as last one,
   // but you can also remove it

@@ -1,5 +1,5 @@
-import { ItemStore } from 'src/store/item/constants'
+// import { ItemStore } from 'src/store/item/constants'
 
 export default {
-  [ItemStore.ITEMS]: []
+  ITEMS: []
 }

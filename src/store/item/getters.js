@@ -8,7 +8,7 @@ export default {
   },
   [ItemStore.FIND_BY_KEYWORD]: state => {
     return keyword => {
-      return state[ItemStore.ITEMS].find(i => (i.name + " " + i.brand).toLowerCase().includes(keyword.toLowerCase()))
+      return state[ItemStore.ITEMS].find(i => (i.name + ' ' + i.brand).toLowerCase().includes(keyword.toLowerCase()))
     }
   }
 }

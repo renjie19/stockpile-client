@@ -2,6 +2,7 @@ import os from 'os'
 import fs from 'fs'
 import { FileUtils } from '../file-utils'
 import defaultConfig from '../../../app-config.default'
+import { AppConfigConstants } from 'src/constants/app-config-constants'
 
 const CONFIG_FOLDER = `${os.homedir()}/stockpile`
 const CONFIG_PATH = `${CONFIG_FOLDER}/config`
@@ -12,7 +13,7 @@ export const AppConfigService = {
   init () {
     console.log('initializing app config...')
     this.initConfigFile()
-    appConfig = this.readConfig()
+    appConfig = JSON.parse(this.readConfig())
   },
   initConfigFile () {
     FileUtils.mkdir(CONFIG_FOLDER)
@@ -22,13 +23,15 @@ export const AppConfigService = {
       addNonExistentKeyValuePairsInExistingConfig.call(this)
     }
   },
+  getServerUrl (restEndPoint) {
+    return appConfig[AppConfigConstants.HOST] + ':' + appConfig[AppConfigConstants.PORT] + restEndPoint
+  },
   getProperty (key) {
-    console.log(appConfig)
     return appConfig[key]
   },
   readConfig () {
     const config = fs.readFileSync(CONFIG_PATH).toString()
-    return JSON.parse(config)
+    return JSON.parse(JSON.stringify(config, null, 2))
   },
   saveConfig (newConfig) {
     const currentConfig = this.readConfig()
@@ -38,12 +41,6 @@ export const AppConfigService = {
     fs.writeFileSync(CONFIG_PATH, currentConfig)
     appConfig = this.readConfig()
   },
-  decryptConfig (content) {
-    if (process.env.DEV || process.env.NODE_ENV === 'test') {
-      return content
-    }
-    return content
-  },
   getDefaultConfig () {
     return JSON.stringify(defaultConfig, null, 2)
   }
@@ -51,11 +48,10 @@ export const AppConfigService = {
 
 function addNonExistentKeyValuePairsInExistingConfig () {
   const existingConfig = this.readConfig()
+  const defaultConfig = this.getDefaultConfig()
   Object.keys(defaultConfig).forEach(key => {
     const value = existingConfig[key]
     if (value === undefined) {
-      console.log(existingConfig)
-
       existingConfig[key] = defaultConfig[key]
     }
   })
